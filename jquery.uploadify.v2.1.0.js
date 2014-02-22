@@ -23,6 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
+/*jshint eqnull: true, eqeqeq: false, -W041: false */
 if(jQuery)(
 	function(jQuery){
 		jQuery.extend(jQuery.fn,{
@@ -102,10 +103,10 @@ if(jQuery)(
 				}
 				jQuery(this).bind("uploadifySelect", {'action': settings.onSelect, 'queueID': settings.queueID}, function(event, ID, fileObj) {
 					if (event.data.action(event, ID, fileObj) !== false) {
-						var byteSize = Math.round(fileObj.size / 1024 * 100) * .01;
+						var byteSize = Math.round(fileObj.size / 1024 * 100) * 0.01;
 						var suffix = 'KB';
 						if (byteSize > 1000) {
-							byteSize = Math.round(byteSize *.001 * 100) * .01;
+							byteSize = Math.round(byteSize * 0.001 * 100) * 0.01;
 							suffix = 'MB';
 						}
 						var sizeParts = byteSize.toString().split('.');
@@ -124,8 +125,11 @@ if(jQuery)(
 							queue = '#' + event.data.queueID;
 						}
 
+						var tmplData;
+
 						if ( 'tmpl' in window ) {
-							var tmplData = {
+
+							tmplData = {
 								coreId: ID,
 								elementId: jQuery(this).attr('id'),
 								cancelImg: settings.cancelImg,
@@ -133,17 +137,24 @@ if(jQuery)(
 								byteSize: byteSize,
 								suffix: suffix
 							};
+
 							jQuery(queue).append(window.tmpl('uploadify-item-template', tmplData));
+
 						} else {
-							jQuery(queue).append('<div id="' + jQuery(this).attr('id') + ID + '" class="uploadifyQueueItem">\
-									<div class="cancel">\
-										<a href="javascript:jQuery(\'#' + jQuery(this).attr('id') + '\').uploadifyCancel(\'' + ID + '\')"><img src="' + settings.cancelImg + '" border="0" /></a>\
-									</div>\
-									<span class="fileName">' + fileName + ' (' + byteSize + suffix + ')</span><span class="percentage"></span>\
-									<div class="uploadifyProgress">\
-										<div id="' + jQuery(this).attr('id') + ID + 'ProgressBar" class="uploadifyProgressBar"><!--Progress Bar--></div>\
-									</div>\
-								</div>');
+
+							tmplData = '';
+							tmplData += '<div id="' + jQuery(this).attr('id') + ID + '" class="uploadifyQueueItem">';
+							tmplData += '<div class="cancel">';
+							tmplData += '<a href="javascript:jQuery(\'#' + jQuery(this).attr('id') + '\').uploadifyCancel(\'' + ID + '\')"><img src="' + settings.cancelImg + '" border="0" /></a>';
+							tmplData += '</div>';
+							tmplData += '<span class="fileName">' + fileName + ' (' + byteSize + suffix + ')</span><span class="percentage"></span>';
+							tmplData += '<div class="uploadifyProgress">';
+							tmplData += '<div id="' + jQuery(this).attr('id') + ID + 'ProgressBar" class="uploadifyProgressBar"><!--Progress Bar--></div>';
+							tmplData += '</div>';
+							tmplData += '</div>';
+
+							jQuery(queue).append(tmplData);
+
 						}
 
 					}
@@ -157,7 +168,7 @@ if(jQuery)(
 					}
 				});
 				jQuery(this).bind("uploadifyCheckExist", {'action': settings.onCheck}, function(event, checkScript, fileQueueObj, folder, single) {
-					var postData = new Object();
+					var postData = {};
 					postData = fileQueueObj;
 					postData.folder = pagePath + folder;
 					if (single) {
@@ -184,7 +195,7 @@ if(jQuery)(
 				jQuery(this).bind("uploadifyCancel", {'action': settings.onCancel}, function(event, ID, fileObj, data, clearFast) {
 					if (event.data.action(event, ID, fileObj, data, clearFast) !== false) {
 						var fadeSpeed = (clearFast == true) ? 0 : 250;
-						jQuery("#" + jQuery(this).attr('id') + ID).fadeOut(fadeSpeed, function() { jQuery(this).remove() });
+						jQuery("#" + jQuery(this).attr('id') + ID).fadeOut(fadeSpeed, function() { jQuery(this).remove(); });
 					}
 				});
 				if (typeof(settings.onClearQueue) == 'function') {
@@ -211,7 +222,7 @@ if(jQuery)(
 				jQuery(this).bind("uploadifyComplete", {'action': settings.onComplete}, function(event, ID, fileObj, response, data) {
 					if (event.data.action(event, ID, fileObj, unescape(response), data) !== false) {
 						jQuery("#" + jQuery(this).attr('id') + ID + " .percentage").text(' - Completed');
-						jQuery("#" + jQuery(this).attr('id') + ID).fadeOut(250, function() { jQuery(this).remove()});
+						jQuery("#" + jQuery(this).attr('id') + ID).fadeOut(250, function() { jQuery(this).remove(); });
 					}
 				});
 				if (typeof(settings.onAllComplete) == 'function') {
@@ -227,10 +238,11 @@ if(jQuery)(
 			var returnValue = false;
 			jQuery(this).each(function() {
 				if (settingName == 'scriptData' && settingValue != null) {
+					var scriptData;
 					if (resetObject) {
-						var scriptData = settingValue;
+						scriptData = settingValue;
 					} else {
-						var scriptData = jQuery.extend(settings.scriptData, settingValue);
+						scriptData = jQuery.extend(settings.scriptData, settingValue);
 					}
 					var scriptDataString = '';
 					for (var name in scriptData) {
@@ -243,7 +255,7 @@ if(jQuery)(
 			if (settingValue == null) {
 				if (settingName == 'scriptData') {
 					var returnSplit = unescape(returnValue).split('&');
-					var returnObj   = new Object();
+					var returnObj   = {};
 					for (var i = 0; i < returnSplit.length; i++) {
 						var iSplit = returnSplit[i].split('=');
 						returnObj[iSplit[0]] = iSplit[1];
@@ -268,5 +280,5 @@ if(jQuery)(
 				document.getElementById(jQuery(this).attr('id') + 'Uploader').clearFileUploadQueue(false);
 			});
 		}
-	})
+	});
 })(jQuery);
