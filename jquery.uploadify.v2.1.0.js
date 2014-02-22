@@ -123,15 +123,29 @@ if(jQuery)(
 						if (event.data.queueID) {
 							queue = '#' + event.data.queueID;
 						}
-						jQuery(queue).append('<div id="' + jQuery(this).attr('id') + ID + '" class="uploadifyQueueItem">\
-								<div class="cancel">\
-									<a href="javascript:jQuery(\'#' + jQuery(this).attr('id') + '\').uploadifyCancel(\'' + ID + '\')"><img src="' + settings.cancelImg + '" border="0" /></a>\
-								</div>\
-								<span class="fileName">' + fileName + ' (' + byteSize + suffix + ')</span><span class="percentage"></span>\
-								<div class="uploadifyProgress">\
-									<div id="' + jQuery(this).attr('id') + ID + 'ProgressBar" class="uploadifyProgressBar"><!--Progress Bar--></div>\
-								</div>\
-							</div>');
+
+						if ( 'tmpl' in window ) {
+							var tmplData = {
+								coreId: ID,
+								elementId: jQuery(this).attr('id'),
+								cancelImg: settings.cancelImg,
+								fileName: fileName,
+								byteSize: byteSize,
+								suffix: suffix
+							};
+							jQuery(queue).append(window.tmpl('uploadify-item-template', tmplData));
+						} else {
+							jQuery(queue).append('<div id="' + jQuery(this).attr('id') + ID + '" class="uploadifyQueueItem">\
+									<div class="cancel">\
+										<a href="javascript:jQuery(\'#' + jQuery(this).attr('id') + '\').uploadifyCancel(\'' + ID + '\')"><img src="' + settings.cancelImg + '" border="0" /></a>\
+									</div>\
+									<span class="fileName">' + fileName + ' (' + byteSize + suffix + ')</span><span class="percentage"></span>\
+									<div class="uploadifyProgress">\
+										<div id="' + jQuery(this).attr('id') + ID + 'ProgressBar" class="uploadifyProgressBar"><!--Progress Bar--></div>\
+									</div>\
+								</div>');
+						}
+
 					}
 				});
 				if (typeof(settings.onSelectOnce) == 'function') {
