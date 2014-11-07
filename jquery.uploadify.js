@@ -53,6 +53,7 @@ if(jQuery)(
 					onCancel       : function() {}, // Function to run when an item is cleared from the queue
 					onError        : function() {}, // Function to run when an upload item returns an error
 					onProgress     : function() {}, // Function to run each time the upload progress is updated
+					onSelectOnce   : function() {},
 					onComplete     : function() {}, // Function to run when an upload is completed
 					onAllComplete  : function() {}  // Functino to run when all uploads are completed
 				}, options);
