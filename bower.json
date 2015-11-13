@@ -1,7 +1,7 @@
 {
   "name": "uploadify",
   "version": "2.1.2",
-  "main": "jquery.uploadify.min.js",
+  "main": "jquery.uploadify.js",
   "keywords": [
     "uploader"
   ],
