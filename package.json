@@ -7,7 +7,6 @@
   },
   "scripts": {
     "grunt": "grunt",
-    "build": "grunt default",
     "install": "napa"
   },
   "napa": {
@@ -27,8 +26,7 @@
   "devDependencies": {
     "grunt": "^0.4.2",
     "grunt-bump": "0.0.13",
-    "grunt-cli": "^0.1.13",
-    "grunt-contrib-uglify": "^0.3.2"
+    "grunt-cli": "^0.1.13"
   },
   "dependencies": {
     "jquery": ">=1.3",
