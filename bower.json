@@ -1,6 +1,6 @@
 {
   "name": "uploadify",
-  "version": "2.2.1",
+  "version": "2.1.0+niksy.1.0.0",
   "main": "jquery.uploadify.js",
   "keywords": [
     "uploader"
