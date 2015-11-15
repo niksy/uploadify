@@ -1,6 +1,6 @@
 {
   "name": "uploadify",
-  "version": "2.1.3",
+  "version": "2.2.0",
   "main": "jquery.uploadify.js",
   "directories": {
     "example": "example"
