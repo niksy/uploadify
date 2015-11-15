@@ -1,12 +1,11 @@
 {
   "name": "uploadify",
-  "version": "2.1.0+niksy.1.0.0",
+  "version": "2.1.0+niksy.1.0.1",
   "main": "jquery.uploadify.js",
   "directories": {
     "example": "example"
   },
   "scripts": {
-    "grunt": "grunt",
     "install": "napa"
   },
   "napa": {
@@ -23,11 +22,7 @@
     "Ronnie Garcia",
     "Travis Nickels"
   ],
-  "devDependencies": {
-    "grunt": "^0.4.2",
-    "grunt-bump": "^0.6.0",
-    "grunt-cli": "^0.1.13"
-  },
+  "devDependencies": {},
   "dependencies": {
     "jquery": ">=1.3",
     "napa": "^2.0.2"
