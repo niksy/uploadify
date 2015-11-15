@@ -21,8 +21,7 @@
   ],
   "dependencies": {
     "jquery": ">=1.3",
-    "swfobject": "Smarp/swfobject#f60f72ceb5999aa5f89b6a5a2fa49a25e1d6d579",
-    "blueimp-tmpl": "~2.5.3"
+    "swfobject": "Smarp/swfobject#f60f72ceb5999aa5f89b6a5a2fa49a25e1d6d579"
   },
   "license": "MIT"
 }

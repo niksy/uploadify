@@ -68,7 +68,20 @@ THE SOFTWARE.
 						onProgress     : function() {}, // Function to run each time the upload progress is updated
 						onSelectOnce   : function() {},
 						onComplete     : function() {}, // Function to run when an upload is completed
-						onAllComplete  : function() {}  // Functino to run when all uploads are completed
+						onAllComplete  : function() {}, // Function to run when all uploads are completed,
+						template       : function( data ) {
+							var str = '';
+							str += '<div id="' + data.elementId + data.coreId + '" class="uploadifyQueueItem">';
+							str += '<div class="cancel">';
+							str += '<a href="javascript:jQuery(\'#' + data.elementId + '\').uploadifyCancel(\'' + data.coreId + '\')"><img src="' + data.cancelImg + '" border="0" /></a>';
+							str += '</div>';
+							str += '<span class="fileName">' + data.fileName + ' (' + data.byteSize + data.suffix + ')</span><span class="percentage"></span>';
+							str += '<div class="uploadifyProgress">';
+							str += '<div id="' + data.elementId + data.coreId + 'ProgressBar" class="uploadifyProgressBar"><!--Progress Bar--></div>';
+							str += '</div>';
+							str += '</div>';
+							return str;
+						}  // Template function
 					}, options);
 					var pagePath = location.pathname;
 					pagePath = pagePath.split('/');
@@ -139,37 +152,14 @@ THE SOFTWARE.
 								queue = '#' + event.data.queueID;
 							}
 
-							var tmplData;
-
-							if ( 'tmpl' in window ) {
-
-								tmplData = {
-									coreId: ID,
-									elementId: jQuery(this).attr('id'),
-									cancelImg: settings.cancelImg,
-									fileName: fileName,
-									byteSize: byteSize,
-									suffix: suffix
-								};
-
-								jQuery(queue).append(window.tmpl('uploadify-item-template', tmplData));
-
-							} else {
-
-								tmplData = '';
-								tmplData += '<div id="' + jQuery(this).attr('id') + ID + '" class="uploadifyQueueItem">';
-								tmplData += '<div class="cancel">';
-								tmplData += '<a href="javascript:jQuery(\'#' + jQuery(this).attr('id') + '\').uploadifyCancel(\'' + ID + '\')"><img src="' + settings.cancelImg + '" border="0" /></a>';
-								tmplData += '</div>';
-								tmplData += '<span class="fileName">' + fileName + ' (' + byteSize + suffix + ')</span><span class="percentage"></span>';
-								tmplData += '<div class="uploadifyProgress">';
-								tmplData += '<div id="' + jQuery(this).attr('id') + ID + 'ProgressBar" class="uploadifyProgressBar"><!--Progress Bar--></div>';
-								tmplData += '</div>';
-								tmplData += '</div>';
-
-								jQuery(queue).append(tmplData);
-
-							}
+							jQuery(queue).append(settings.template.call(this, {
+								coreId: ID,
+								elementId: jQuery(this).attr('id'),
+								cancelImg: settings.cancelImg,
+								fileName: fileName,
+								byteSize: byteSize,
+								suffix: suffix
+							}));
 
 						}
 					});
