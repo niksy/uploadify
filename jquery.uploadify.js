@@ -173,8 +173,7 @@
 					});
 					jQuery(this).bind("uploadifyCancel", {'action': settings.onCancel}, function(event, ID, fileObj, data, clearFast) {
 						if (event.data.action(event, ID, fileObj, data, clearFast) !== false) {
-							jQuery("#" + jQuery(this).attr('id') + ID);
-							jQuery(this).remove();
+							jQuery("#" + jQuery(this).attr('id') + ID).remove();
 						}
 					});
 					if (typeof(settings.onClearQueue) == 'function') {
@@ -201,8 +200,7 @@
 					jQuery(this).bind("uploadifyComplete", {'action': settings.onComplete}, function(event, ID, fileObj, response, data) {
 						if (event.data.action(event, ID, fileObj, unescape(response), data) !== false) {
 							jQuery("#" + jQuery(this).attr('id') + ID + " .percentage").text(' - Completed');
-							jQuery("#" + jQuery(this).attr('id') + ID);
-							jQuery(this).remove();
+							jQuery("#" + jQuery(this).attr('id') + ID).remove();
 						}
 					});
 					if (typeof(settings.onAllComplete) == 'function') {
